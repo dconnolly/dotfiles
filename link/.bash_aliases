@@ -1,0 +1,6 @@
+alias emacs='emacs24 -nw'
+alias jobs='jobs -l'
+alias ls='ls -lahFG --color=auto'
+alias df='df -h'
+alias du='du -h'
+alias wget='axel'
