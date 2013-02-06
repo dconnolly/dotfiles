@@ -16,3 +16,6 @@
 [submodule "libs/nave"]
 	path = libs/nave
 	url = git://github.com/isaacs/nave.git
+[submodule "link/.emacs.d"]
+	path = link/.emacs.d
+	url = git@github.com:dconnolly/emacs.d.git
