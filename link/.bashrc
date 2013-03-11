@@ -71,8 +71,6 @@ esac
 
 export TERM=xterm-256color
 
-alias ls='ls -lahG'
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -90,7 +88,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 export EDITOR='emacs -nw'
-
+export P4EDITOR='emacs -nw'
 export LANG="en_US.UTF-8"
 
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
@@ -101,7 +99,11 @@ PATH=~/.dotfiles/bin:$PATH
 # Homebrew things? Yeoman things?
 PATH=/usr/local/bin:$PATH
 
-export PATH
+# For pip-installed executables, like HTTPie
+PATH=/usr/local/Cellar/python/2.7.3/bin:$PATH
+
+# Chromium depot tools
+PATH=~/dev/depot_tools:$PATH
 
 # Source all files in ~/.dotfiles/source/
 function src() {
@@ -123,3 +125,7 @@ function dotfiles() {
 src
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+alias ls='ls -lahG'
+
+export PATH
