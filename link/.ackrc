@@ -3,4 +3,12 @@
 --ignore-dir=vendor
 --ignore-dir=public/generated
 --sort-files
+--color
 -a
+
+--type-set=haml=.haml
+--type-set=sass=.sass
+--type-set=scss=.scss
+--type-set=erb=.erb
+--type-set=coffee=.coffee
+--type-set=ejs=.ejs
