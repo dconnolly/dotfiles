@@ -7,6 +7,7 @@
 *.o
 *.so
 
+
 # Packages #
 ############
 # It's better to unpack these files and commit the raw source because
@@ -20,9 +21,11 @@
 *.xz
 *.lzma
 
+
 #packing-only formats
 *.iso
 *.tar
+
 
 #package management formats
 *.dmg
@@ -32,32 +35,52 @@
 *.deb
 *.rpm
 
+
 # Logs and databases #
 ######################
 *.log
 *.sql
 *.sqlite
 
+
 # OS generated files #
 ######################
 .DS_Store
 
+
 # Thumbnails
 ._*
+
 
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
 
+
 # Windows image file caches
 Thumbs.db 
+
 
 # Folder config file
 Desktop.ini
 
-# NPM
+
+# NPM #
+#######
 .npmignore
 
-# Emacs
-*#
+
+# Emacs #
+#########
 *~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
