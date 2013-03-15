@@ -1,6 +1,5 @@
 [user]
-  name = Ben Alman
-  email = EMAIL
+	name = Deirdre Connolly
 [core]
   autocrlf = input
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
@@ -57,3 +56,7 @@
   insteadOf = "gist:"
 [url "git@heroku.com:"]
   insteadOf = "heroku:"
+[credential]
+	helper = osxkeychain
+[push]
+	default = simple
