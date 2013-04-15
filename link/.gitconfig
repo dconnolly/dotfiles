@@ -1,9 +1,11 @@
 [user]
-	name = Deirdre Connolly
+  name = Deirdre Connolly
+  email = durumcrustulum@gmail.com
 [core]
   autocrlf = input
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
   excludesfile = ~/.gitignore_global
+  editor = emacs
 [apply]
   whitespace = fix
 [alias]
@@ -57,6 +59,11 @@
 [url "git@heroku.com:"]
   insteadOf = "heroku:"
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
 [push]
-	default = simple
+  default = simple
+[git-p4]
+  user = deirdrec
+  client = deirdrec_pakhet
+  port = "rsh:ssh -a -c blowfish -l p4ssh -q -x perforce.akamai.com /bin/true"
+  skipUserNameCheck = true
