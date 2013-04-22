@@ -2,6 +2,25 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Source all files in ~/.dotfiles/source/
+function src() {
+  local file
+  if [[ "$1" ]]; then
+    source "$HOME/.dotfiles/source/$1.sh"
+  else
+    for file in ~/.dotfiles/source/*; do
+      source "$file"
+    done
+  fi
+}
+
+# Run dotfiles script, then source.
+function dotfiles() {
+  ~/.dotfiles/bin/dotfiles "$@" && src
+}
+
+src
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -28,9 +47,13 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# Bash Completion. Expects brew-installed bash-completion.
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  . $(brew --prefix)/etc/bash_completion
+fi
 
 # Allow fancy colors if we have ncurses-term installed
-#export TERM=xterm-256color
+export TERM=xterm-256color
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -80,52 +103,25 @@ if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
-fi
-
 export EDITOR='emacs -nw'
 export P4EDITOR='emacs -nw'
 export LANG="en_US.UTF-8"
 
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
+export MAVEN_OPTS=' -Xmx1G -XX:MaxPermSize=512m'
+
+export P4CLIENT='deirdrec_pakhet'
+
+# RVM
+PATH=~/.rvm/bin:$PATH # Add RVM to PATH for scripting
+
+# Chromium depot tools
+PATH=~/dev/depot_tools:$PATH
 
 # Add binaries into the path
 PATH=~/.dotfiles/bin:$PATH
 
 # Homebrew things? Yeoman things?
-PATH=/usr/local/bin:$PATH
-
-# For pip-installed executables, like HTTPie
-PATH=/usr/local/Cellar/python/2.7.3/bin:$PATH
-
-# Chromium depot tools
-PATH=~/dev/depot_tools:$PATH
-
-# Source all files in ~/.dotfiles/source/
-function src() {
-  local file
-  if [[ "$1" ]]; then
-    source "$HOME/.dotfiles/source/$1.sh"
-  else
-    for file in ~/.dotfiles/source/*; do
-      source "$file"
-    done
-  fi
-}
-
-# Run dotfiles script, then source.
-function dotfiles() {
-  ~/.dotfiles/bin/dotfiles "$@" && src
-}
-
-src
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
-alias ls='ls -lahG'
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 export PATH
