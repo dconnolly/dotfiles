@@ -1,6 +1,5 @@
 [user]
   name = Deirdre Connolly
-  email = durumcrustulum@gmail.com
 [core]
   autocrlf = input
   whitespace = fix,space-before-tab,tab-in-indent,trailing-space
@@ -62,8 +61,3 @@
   helper = osxkeychain
 [push]
   default = simple
-[git-p4]
-  user = deirdrec
-  client = deirdrec_pakhet
-  port = "rsh:ssh -a -c blowfish -l p4ssh -q -x perforce.akamai.com /bin/true"
-  skipUserNameCheck = true

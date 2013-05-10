@@ -110,7 +110,10 @@ export LANG="en_US.UTF-8"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 export MAVEN_OPTS=' -Xmx1G -XX:MaxPermSize=512m'
 
+# FUCKING PERFORCE
 export P4CLIENT='deirdrec_pakhet'
+export P4USER='deirdrec'
+export P4PORT="rsh:ssh -2 -a -c blowfish -l p4ssh -q -x perforce.akamai.com /bin/true"
 
 # RVM
 PATH=~/.rvm/bin:$PATH # Add RVM to PATH for scripting
