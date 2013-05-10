@@ -1,4 +1,3 @@
-alias emacs='/usr/local/Cellar/emacs/24.2/bin/emacs -nw'
 alias jobs='jobs -l'
 alias ls='ls -lahG'
 alias df='df -h'
