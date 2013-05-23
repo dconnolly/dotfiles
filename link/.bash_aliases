@@ -1,5 +1,5 @@
 alias jobs='jobs -l'
-alias ls='ls -lahG'
+alias ls='ls -lahG --color'
 alias df='df -h'
 alias du='du -h'
 alias wget='axel'
