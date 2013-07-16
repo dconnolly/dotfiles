@@ -127,4 +127,7 @@ PATH=~/.dotfiles/bin:$PATH
 # Homebrew things? Yeoman things?
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
+# Node/NPM things
+PATH=/usr/local/share/npm/bin:$PATH
+
 export PATH
