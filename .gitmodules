@@ -19,3 +19,4 @@
 [submodule "link/.emacs.d"]
 	path = link/.emacs.d
 	url = git@github.com:dconnolly/emacs.d.git
+	branch = master
