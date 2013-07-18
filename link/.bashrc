@@ -2,6 +2,29 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# Logging stuff.
+function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
+function e_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
+function e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
+function e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
+
+function HomeBrewInstalled() {
+    # OSX
+    if [[ "$OSTYPE" =~ ^darwin ]]; then
+	# It's easiest to get Git via Homebrew, so get that first.
+	if [[ "$(type -P brew)" ]]; then
+	    e_success "We have HomeBrew."
+	    return 0
+	else
+	    e_error "No HomeBrew."
+	    return 1
+	fi
+    else
+	e_error "Not OSX, no HomeBrew."
+	return 1
+    fi
+}
+
 # Source all files in ~/.dotfiles/source/
 function src() {
   local file
@@ -115,6 +138,9 @@ export P4CLIENT='deirdrec_pakhet'
 export P4USER='deirdrec'
 export P4PORT="rsh:ssh -2 -a -c blowfish -l p4ssh -q -x perforce.akamai.com /bin/true"
 
+# Add binaries into the path
+PATH=~/.dotfiles/bin:$PATH
+
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 rvm gemset use global
@@ -123,13 +149,16 @@ PATH=~/.rvm/bin:$PATH # Add RVM to PATH for scripting
 # Chromium depot tools
 PATH=~/dev/depot_tools:$PATH
 
-# Add binaries into the path
-PATH=~/.dotfiles/bin:$PATH
+# Node/NPM things
+PATH=/usr/local/share/npm/bin:$PATH
 
 # Homebrew things? Yeoman things?
 PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
-# Node/NPM things
-PATH=/usr/local/share/npm/bin:$PATH
+# If we have coreutils installed via HomeBrew, use those instead of OSX's.
+if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
+    PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+    MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
+fi
 
 export PATH
