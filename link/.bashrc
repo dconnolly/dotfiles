@@ -162,3 +162,4 @@ if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
 fi
 
 export PATH
+export MANPATH
