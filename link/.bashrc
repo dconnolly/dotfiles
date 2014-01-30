@@ -133,6 +133,9 @@ export LANG="en_US.UTF-8"
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 export MAVEN_OPTS=' -Xmx1G -XX:MaxPermSize=512m'
 
+## Android SDK
+export ANDROID_HOME=/usr/local/opt/android-sdk
+
 # FUCKING PERFORCE
 export P4CLIENT='deirdrec_pakhet'
 export P4USER='deirdrec'
@@ -141,11 +144,6 @@ export P4PORT="rsh:ssh -2 -a -c blowfish -l p4ssh -q -x perforce.akamai.com /bin
 # Add binaries into the path
 PATH=~/.dotfiles/bin:$PATH
 
-# RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-rvm gemset use global
-PATH=~/.rvm/bin:$PATH # Add RVM to PATH for scripting
-
 # Chromium depot tools
 PATH=~/dev/depot_tools:$PATH
 
@@ -153,7 +151,7 @@ PATH=~/dev/depot_tools:$PATH
 PATH=/usr/local/share/npm/bin:$PATH
 
 # Homebrew things? Yeoman things?
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt:$PATH
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
 if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then

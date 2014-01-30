@@ -1,10 +1,11 @@
 [user]
-  name = Deirdre Connolly
+	name = Deirdre Connolly
 [core]
   autocrlf = input
-  whitespace = space-before-tab,trailing-space
+  whitespace = space-before-tab,trailing-space,tab=8
   excludesfile = ~/.gitignore_global
   editor = emacs
+  filemode = true
 [alias]
   br = branch
   ci = commit
@@ -17,13 +18,20 @@
   rv = review
   st = status
   ksdiff = difftool -y -t Kaleidoscope
-        create-pull-request = !sh -c 'stash pull-request $0'
+  create-pull-request = !sh -c 'stash pull-request $0'
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+  lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  l = log --oneline --decorate
 [branch "master"]
   remote = origin
   merge = refs/heads/master
   autosetuprebase = always
 [color]
   ui = auto
+  diff = auto
 [color "branch"]
   current = yellow reverse
   local = yellow
