@@ -11,17 +11,8 @@ indent_size = 4
 indent_style = space
 trim_trailing_whitespace = true
 
-[*.js]
-indent_size = 2
-
-[*.rb]
-indent_size = 2
-
-[*.ru]
+[{*.js, *.rb, *.ru}]
 indent_size = 2
 
 [*.md]
 trim_trailing_whitespace = false
-
-[*.sass]
-indent_size = 4
