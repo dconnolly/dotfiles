@@ -150,8 +150,12 @@ PATH=~/dev/depot_tools:$PATH
 # Node/NPM things
 PATH=/usr/local/share/npm/bin:$PATH
 
+# Go things
+export GOPATH=$HOME/.go
+PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin:$GOPATH
+
 # Homebrew things? Yeoman things?
-PATH=/usr/local/bin:/usr/local/sbin:/usr/local/opt:$PATH
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
 if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
@@ -161,3 +165,9 @@ fi
 
 export PATH
 export MANPATH
+
+# The next line updates PATH for the Google Cloud SDK.
+source /Users/deirdrec/dev/google-cloud-sdk/path.bash.inc
+
+# The next line enables bash completion for gcloud.
+source /Users/deirdrec/dev/google-cloud-sdk/completion.bash.inc

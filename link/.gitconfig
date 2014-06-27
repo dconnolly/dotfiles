@@ -1,5 +1,6 @@
 [user]
 	name = Deirdre Connolly
+	email = durumcrustulum@gmail.com
 [core]
   autocrlf = input
   whitespace = space-before-tab,trailing-space,tab=8
@@ -48,6 +49,7 @@
   untracked = cyan
 [merge]
   log = true
+	conflictstyle = diff3
 [difftool "Kaleidoscope"]
   cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
 [rerere]

@@ -58,7 +58,7 @@
 
 
 # Windows image file caches
-Thumbs.db 
+Thumbs.db
 
 
 # Folder config file
@@ -84,3 +84,6 @@ tramp
 # Org-mode
 .org-id-locations
 *_archive
+
+# Tern
+.tern-port
