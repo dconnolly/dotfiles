@@ -1,0 +1,39 @@
+#!/bin/bash
+
+INTERFACE=Wi-Fi
+
+# Logging stuff.
+function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
+
+# If tor is not installed...
+if [[ ! "$(type -P tor)" ]]; then
+  # OSX
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+    # It's easiest to get tor via Homebrew.
+    if [[ ! "$(type -P brew)" ]]; then
+      e_header "Installing Homebrew"
+      true | /usr/bin/ruby -e "$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
+    fi
+    if [[ "$(type -P brew)" ]]; then
+      e_header "Updating Homebrew"
+      brew update
+      e_header "Installing tor"
+      brew install tor
+    fi
+  # Ubuntu.
+  elif [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+    e_header "Installing tor"
+    sudo apt-get -qq install tor
+  fi
+fi
+
+if [[ ! "$(type -P tor)" ]]; then
+  e_error "tor should be installed. It isn't. Aborting."
+  exit 1
+fi
+
+
+networksetup -setsocksfirewallproxy $INTERFACE 127.0.0.1 9050 off
+networksetup -setsocksfirewallproxystate $INTERFACE on
+tor
+networksetup -setsocksfirewallproxystate $INTERFACE off
