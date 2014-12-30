@@ -8,6 +8,17 @@ function e_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
 function e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 function e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
 
+function isOSX() {
+  # OSX
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+      e_success "We have HomeBrew."
+      return 0
+  else
+    e_error "Not OSX."
+    return 1
+  fi
+}
+
 function HomeBrewInstalled() {
     # OSX
     if [[ "$OSTYPE" =~ ^darwin ]]; then
