@@ -177,11 +177,13 @@ if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
     MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
 fi
 
+eval "$(grunt --completion=bash)"
+
 export PATH
 export MANPATH
 
 # The next line updates PATH for the Google Cloud SDK.
-source /Users/deirdrec/dev/google-cloud-sdk/path.bash.inc
+source ~/dev/google-cloud-sdk/path.bash.inc
 
 # The next line enables bash completion for gcloud.
-source /Users/deirdrec/dev/google-cloud-sdk/completion.bash.inc
+source ~/dev/google-cloud-sdk/completion.bash.inc
