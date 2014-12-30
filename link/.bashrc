@@ -141,8 +141,11 @@ export EDITOR='emacs -nw'
 export P4EDITOR='emacs -nw'
 export LANG="en_US.UTF-8"
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 export MAVEN_OPTS=' -Xmx1G -XX:MaxPermSize=512m'
+
+if [[ isOSX ]]; then
+    export JAVA_HOME=$(/usr/libexec/java_home)
+fi
 
 ## Android SDK
 export ANDROID_HOME=/usr/local/opt/android-sdk
