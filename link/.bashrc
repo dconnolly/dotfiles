@@ -20,20 +20,20 @@ function isOSX() {
 }
 
 function HomeBrewInstalled() {
-    # OSX
-    if [[ "$OSTYPE" =~ ^darwin ]]; then
-	# It's easiest to get Git via Homebrew, so get that first.
-	if [[ "$(type -P brew)" ]]; then
-	    e_success "We have HomeBrew."
-	    return 0
-	else
-	    e_error "No HomeBrew."
-	    return 1
-	fi
-    else
-	e_error "Not OSX, no HomeBrew."
-	return 1
-    fi
+  # OSX
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+      # It's easiest to get Git via Homebrew, so get that first.
+      if [[ "$(type -P brew)" ]]; then
+          e_success "We have HomeBrew."
+          return 0
+      else
+        e_error "No HomeBrew."
+        return 1
+      fi
+  else
+    e_error "Not OSX, no HomeBrew."
+    return 1
+  fi
 }
 
 # Source all files in ~/.dotfiles/source/
