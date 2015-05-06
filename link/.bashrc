@@ -138,10 +138,7 @@ if [ -f ~/.bash_aliases ]; then
 fi
 
 export EDITOR='emacs -nw'
-export P4EDITOR='emacs -nw'
 export LANG="en_US.UTF-8"
-
-export MAVEN_OPTS=' -Xmx1G -XX:MaxPermSize=512m'
 
 if [[ isOSX ]]; then
     export JAVA_HOME=$(/usr/libexec/java_home)
@@ -150,10 +147,9 @@ fi
 ## Android SDK
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
-# FUCKING PERFORCE
-export P4CLIENT='deirdrec_pakhet'
-export P4USER='deirdrec'
-export P4PORT="rsh:ssh -2 -a -c blowfish -l p4ssh -q -x perforce.akamai.com /bin/true"
+# BEGIN PATH MODIFICATION
+
+PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
 # Add binaries into the path
 PATH=~/.dotfiles/bin:$PATH
@@ -161,15 +157,18 @@ PATH=~/.dotfiles/bin:$PATH
 # Chromium depot tools
 PATH=~/dev/depot_tools:$PATH
 
-# Node/NPM things
+# NPM things
 PATH=/usr/local/share/npm/bin:$PATH
+
+# NVM things (assumes Homebrew)
+if [[ HomeBrewInstalled && $(brew list | grep nvm) ]]; then
+    export NVM_DIR=$(brew --prefix)/var/nvm
+    source $(brew --prefix nvm)/nvm.sh
+fi
 
 # Go things
 export GOPATH=$HOME/.go
-PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin:$GOPATH
-
-# Homebrew things? Yeoman things?
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
+PATH=$PATH:/usr/local/opt/go/libexec/bin:$GOPATH
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
 if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
@@ -177,10 +176,12 @@ if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
     MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
 fi
 
-eval "$(grunt --completion=bash)"
-
 export PATH
 export MANPATH
+
+# END PATH MODIFICATION
+
+eval "$(grunt --completion=bash)"
 
 # The next line updates PATH for the Google Cloud SDK.
 source ~/dev/google-cloud-sdk/path.bash.inc
