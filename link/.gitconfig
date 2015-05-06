@@ -14,7 +14,7 @@
   pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
   rb = rbranch
   rv = review
-  st = status
+  sv = status --verbose --verbose
   ksdiff = difftool -y -t Kaleidoscope
   create-pull-request = !sh -c 'stash pull-request $0'
   ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
@@ -50,7 +50,7 @@
 [difftool "Kaleidoscope"]
   cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
 [rerere]
-  enabled = 1
+  enabled = true
 [url "git@github.com:"]
   insteadOf = "gh:"
   pushInsteadOf = "github:"
@@ -69,6 +69,7 @@
   helper = osxkeychain
 [push]
   default = simple
+  followTags = true
 [pull]
   rebase = true
 [fetch]
@@ -80,3 +81,9 @@
   detectCopies = true
 [user]
 	name = Deirdre Connolly
+[log]
+  graph = true
+  decorate = true
+[status]
+  branch = true
+  showUntrackedFiles = all
