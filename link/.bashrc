@@ -9,30 +9,26 @@ function e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 function e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
 
 function isOSX() {
-  # OSX
   if [[ "$OSTYPE" =~ ^darwin ]]; then
       e_success "We have HomeBrew."
+      IS_OSX=true
       return 0
   else
-    e_error "Not OSX."
-    return 1
+      e_error "Not OSX."
+      IS_OSX=false
+      return 1
   fi
 }
 
 function HomeBrewInstalled() {
-  # OSX
-  if [[ "$OSTYPE" =~ ^darwin ]]; then
-      # It's easiest to get Git via Homebrew, so get that first.
-      if [[ "$(type -P brew)" ]]; then
-          e_success "We have HomeBrew."
-          return 0
-      else
-        e_error "No HomeBrew."
-        return 1
-      fi
+  if which brew > /dev/null; then
+      e_success "We have HomeBrew."
+      HOMEBREW_INSTALLED=true
+      return 0
   else
-    e_error "Not OSX, no HomeBrew."
-    return 1
+      e_error "No HomeBrew."
+      HOMEBREW_INSTALLED=false
+      return 1
   fi
 }
 
@@ -54,6 +50,8 @@ function dotfiles() {
 }
 
 src
+isOSX
+HomeBrewInstalled
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -82,8 +80,8 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 # Bash Completion. Expects brew-installed bash-completion.
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if $HOMEBREW_INSTALLED && [ -f $(brew --prefix)/etc/bash_completion ]; then
+    $(brew --prefix)/etc/bash_completion
 fi
 
 # Allow fancy colors if we have ncurses-term installed
@@ -137,7 +135,7 @@ if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
 
-if [[ HomeBrewInstalled ]]; then
+if $HOMEBREW_INSTALLED; then
     export HOMEBREW_BUILD_FROM_SOURCE=1
 fi
 
@@ -145,7 +143,7 @@ fi
 export EDITOR='emacs -nw'
 export LANG="en_US.UTF-8"
 
-if [[ isOSX ]]; then
+if $IS_OSX; then
     export JAVA_HOME=$(/usr/libexec/java_home)
 fi
 
@@ -166,7 +164,7 @@ PATH=~/dev/depot_tools:$PATH
 PATH=/usr/local/share/npm/bin:$PATH
 
 # NVM things (assumes Homebrew)
-if [[ HomeBrewInstalled && $(brew list | grep nvm) ]]; then
+if $HOMEBREW_INSTALLED && brew list | grep nvm; then
     export NVM_DIR=$(brew --prefix)/var/nvm
     source $(brew --prefix nvm)/nvm.sh
 fi
@@ -176,7 +174,7 @@ export GOPATH=$HOME/.go
 PATH=$PATH:$GOPATH/bin
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
-if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
+if $HOMEBREW_INSTALLED && brew list | grep coreutils; then
     PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
     MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
 fi
