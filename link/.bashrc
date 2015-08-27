@@ -10,7 +10,7 @@ function e_arrow()    { echo -e " \033[1;33m➜\033[0m  $@"; }
 
 function isOSX() {
   if [[ "$OSTYPE" =~ ^darwin ]]; then
-      e_success "We have HomeBrew."
+      e_success "OSX."
       IS_OSX=true
       return 0
   else
@@ -81,7 +81,7 @@ fi
 
 # Bash Completion. Expects brew-installed bash-completion.
 if $HOMEBREW_INSTALLED && [ -f $(brew --prefix)/etc/bash_completion ]; then
-    $(brew --prefix)/etc/bash_completion
+    . $(brew --prefix)/etc/bash_completion
 fi
 
 # Allow fancy colors if we have ncurses-term installed
@@ -164,7 +164,7 @@ PATH=~/dev/depot_tools:$PATH
 PATH=/usr/local/share/npm/bin:$PATH
 
 # NVM things (assumes Homebrew)
-if $HOMEBREW_INSTALLED && brew list | grep nvm; then
+if $HOMEBREW_INSTALLED && brew list | grep nvm > /dev/null; then
     export NVM_DIR=$(brew --prefix)/var/nvm
     source $(brew --prefix nvm)/nvm.sh
 fi
@@ -174,7 +174,7 @@ export GOPATH=$HOME/.go
 PATH=$PATH:$GOPATH/bin
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
-if $HOMEBREW_INSTALLED && brew list | grep coreutils; then
+if $HOMEBREW_INSTALLED && brew list | grep coreutils > /dev/null; then
     PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
     MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
 fi
