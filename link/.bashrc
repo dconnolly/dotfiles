@@ -14,7 +14,7 @@ function isOSX() {
       IS_OSX=true
       return 0
   else
-      e_error "Not OSX."
+      e_error "No OSX."
       IS_OSX=false
       return 1
   fi
@@ -22,7 +22,7 @@ function isOSX() {
 
 function HomeBrewInstalled() {
   if which brew > /dev/null; then
-      e_success "We have HomeBrew."
+      e_success "HomeBrew."
       HOMEBREW_INSTALLED=true
       return 0
   else
