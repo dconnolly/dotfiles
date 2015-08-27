@@ -137,6 +137,11 @@ if [ -f ~/.bash_aliases ]; then
     source ~/.bash_aliases
 fi
 
+if [[ HomeBrewInstalled ]]; then
+    export HOMEBREW_BUILD_FROM_SOURCE=1
+fi
+
+
 export EDITOR='emacs -nw'
 export LANG="en_US.UTF-8"
 
@@ -168,7 +173,7 @@ fi
 
 # Go things
 export GOPATH=$HOME/.go
-PATH=$PATH:/usr/local/opt/go/libexec/bin:$GOPATH
+PATH=$PATH:$GOPATH/bin
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
 if [[ HomeBrewInstalled && $(brew list | grep coreutils) ]]; then
