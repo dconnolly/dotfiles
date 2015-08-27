@@ -124,6 +124,4 @@ Check it out:
 <https://github.com/cowboy/dotfiles>
 
 ## License
-Copyright (c) 2013 "Cowboy" Ben Alman, Deirdre Connolly
-Licensed under the MIT license.  
-<http://benalman.com/about/license/>
+MIT
