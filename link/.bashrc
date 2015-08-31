@@ -136,12 +136,6 @@ esac
 
 export TERM=xterm-256color
 
-if isHomebrewFormulaInstalled git-radar ; then
-  PS1="$PS1\$(git-radar --bash --fetch)"
-fi
-
-export PS1
-
 
 # Alias definitions.
 #
