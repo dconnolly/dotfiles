@@ -32,6 +32,11 @@ function HomeBrewInstalled() {
   fi
 }
 
+# Test if a Homebrew formula is already installed. Assumes HomeBrewInstalled() is true.
+function isHomebrewFormulaInstalled() {
+  brew list | grep $1 > /dev/null
+}
+
 # Source all files in ~/.dotfiles/source/
 function src() {
   local file
@@ -81,7 +86,7 @@ fi
 
 # Bash Completion. Expects brew-installed bash-completion.
 if $HOMEBREW_INSTALLED && [ -f $(brew --prefix)/etc/bash_completion ]; then
-    . $(brew --prefix)/etc/bash_completion
+    $(brew --prefix)/etc/bash_completion
 fi
 
 # Allow fancy colors if we have ncurses-term installed
@@ -108,12 +113,24 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+
+#
+# PS1
+#
+
 if [ "$color_prompt" = yes ]; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
+
+if isHomebrewFormulaInstalled git-radar ; then
+    export PS1="$PS1\$(git-radar --bash --fetch) "
+fi
+
+export PS1
+
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -126,7 +143,9 @@ esac
 
 export TERM=xterm-256color
 
+
 # Alias definitions.
+#
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
@@ -164,7 +183,7 @@ PATH=~/dev/depot_tools:$PATH
 PATH=/usr/local/share/npm/bin:$PATH
 
 # NVM things (assumes Homebrew)
-if $HOMEBREW_INSTALLED && brew list | grep nvm > /dev/null; then
+if $HOMEBREW_INSTALLED && isHomebrewFormulaInstalled nvm ; then
     export NVM_DIR=$(brew --prefix)/var/nvm
     source $(brew --prefix nvm)/nvm.sh
 fi
@@ -174,7 +193,7 @@ export GOPATH=$HOME/.go
 PATH=$PATH:$GOPATH/bin
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
-if $HOMEBREW_INSTALLED && brew list | grep coreutils > /dev/null; then
+if $HOMEBREW_INSTALLED && isHomebrewFormulaInstalled coreutils ; then
     PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
     MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
 fi
