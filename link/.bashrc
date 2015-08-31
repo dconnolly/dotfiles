@@ -86,7 +86,7 @@ fi
 
 # Bash Completion. Expects brew-installed bash-completion.
 if $HOMEBREW_INSTALLED && [ -f $(brew --prefix)/etc/bash_completion ]; then
-    $(brew --prefix)/etc/bash_completion
+  . $(brew --prefix)/etc/bash_completion
 fi
 
 # Allow fancy colors if we have ncurses-term installed
@@ -125,13 +125,6 @@ else
 fi
 unset color_prompt force_color_prompt
 
-if isHomebrewFormulaInstalled git-radar ; then
-    export PS1="$PS1\$(git-radar --bash --fetch) "
-fi
-
-export PS1
-
-
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
@@ -142,6 +135,12 @@ xterm*|rxvt*)
 esac
 
 export TERM=xterm-256color
+
+if isHomebrewFormulaInstalled git-radar ; then
+  PS1="$PS1\$(git-radar --bash --fetch)"
+fi
+
+export PS1
 
 
 # Alias definitions.
