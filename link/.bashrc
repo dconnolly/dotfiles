@@ -2,6 +2,9 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # Logging stuff.
 function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
 function e_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
@@ -57,9 +60,6 @@ function dotfiles() {
 src
 isOSX
 HomeBrewInstalled
-
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -175,10 +175,14 @@ PATH=~/dev/depot_tools:$PATH
 # NPM things
 PATH=/usr/local/share/npm/bin:$PATH
 
-# NVM things (assumes Homebrew)
+# NVM things
 if $HOMEBREW_INSTALLED && isHomebrewFormulaInstalled nvm ; then
     export NVM_DIR=$(brew --prefix)/var/nvm
     source $(brew --prefix nvm)/nvm.sh
+fi
+
+if command -v nvm > /dev/null; then
+  [[ -r $NVM_DIR/bash_completion ]] && source $NVM_DIR/bash_completion
 fi
 
 # Go things
