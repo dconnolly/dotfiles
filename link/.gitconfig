@@ -5,6 +5,7 @@
   editor = emacs
   filemode = true
 [alias]
+  b = branch -vv
   br = branch
   ci = commit
   co = checkout
@@ -13,10 +14,9 @@
   lg = log -p
   pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
   rb = rbranch
-  rv = review
+  show-tree = log --all --graph --decorate --oneline --simplify-by-decoration
   sv = status --verbose --verbose
   ksdiff = difftool -y -t Kaleidoscope
-  create-pull-request = !sh -c 'stash pull-request $0'
   ls = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
   lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
@@ -82,9 +82,8 @@
 [user]
   name = Deirdre Connolly
 [log]
-  graph = true
-  decorate = true
-  pretty = format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  decorate = auto
+  showRoot = true
 [status]
   branch = true
   showUntrackedFiles = all
