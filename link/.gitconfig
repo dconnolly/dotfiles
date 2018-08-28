@@ -4,6 +4,7 @@
   excludesfile = ~/.gitignore_global
   editor = emacs
   filemode = true
+  pager = "less -r"
 [alias]
   b = branch -vv
   br = branch
@@ -14,7 +15,7 @@
   lg = log -p
   pp = !"echo 'Pull'; git pull; echo 'Push'; git push"
   rb = rbranch
-  show-tree = log --all --graph --decorate --oneline --simplify-by-decoration
+  show-tree = log --all --tags --graph --decorate --oneline --simplify-by-decoration
   sv = status --verbose --verbose
   ksdiff = difftool -y -t Kaleidoscope
   ls = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
@@ -44,13 +45,48 @@
   added = yellow
   changed = green
   untracked = cyan
+[credential]
+  helper = osxkeychain
+[diff]
+  compactionHeuristic = true
+[difftool "Kaleidoscope"]
+  cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+[fetch]
+  fsckobjects = true
+  prune = true
+[git-p4]
+  skipSubmitEdit = true
+  skipSubmitEditCheck = true
+  detectRenames = true
+  detectCopies = true
+[log]
+  date = local
+  decorate = auto
+  showRoot = true
 [merge]
   log = true
   conflictstyle = diff3
-[difftool "Kaleidoscope"]
-  cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+[pull]
+  rebase = true
+[push]
+  default = simple
+  followTags = true
+[receive]
+  fsckobjects = true
 [rerere]
   enabled = true
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = [A-Z0-9]{20}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+	allowed = AKIAIOSFODNN7EXAMPLE
+	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+[status]
+  branch = true
+  showUntrackedFiles = all
+[transfer]
+  fsckobjects = true
 [url "git@github.com:"]
   insteadOf = "gh:"
   pushInsteadOf = "github:"
@@ -65,25 +101,6 @@
   insteadOf = "gist:"
 [url "git@heroku.com:"]
   insteadOf = "heroku:"
-[credential]
-  helper = osxkeychain
-[push]
-  default = simple
-  followTags = true
-[pull]
-  rebase = true
-[fetch]
-  prune = true
-[git-p4]
-  skipSubmitEdit = true
-  skipSubmitEditCheck = true
-  detectRenames = true
-  detectCopies = true
 [user]
-  name = Deirdre Connolly
-[log]
-  decorate = auto
-  showRoot = true
-[status]
-  branch = true
-  showUntrackedFiles = all
+	name = Deirdre Connolly
+	email = durumcrustulum@gmail.com
