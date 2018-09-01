@@ -40,6 +40,11 @@ function isHomebrewFormulaInstalled() {
   brew list | grep $1 > /dev/null
 }
 
+# Test if a Homebrew Cask is already installed. Assumes HomeBrewInstalled() is true.
+function isHomebrewCaskInstalled() {
+  brew cask list | grep $1 > /dev/null
+}
+
 # Source all files in ~/.dotfiles/source/
 function src() {
   local file
@@ -151,6 +156,10 @@ if $HOMEBREW_INSTALLED; then
     export HOMEBREW_BUILD_FROM_SOURCE=1
 fi
 
+# GitHub repo reading api token.
+if $HOMEBREW_INSTALLED; then
+  export HOMEBREW_GITHUB_API_TOKEN="2eb89b68c2ce7009fcc6222f85af6a76a2fe37bc"
+fi
 
 export EDITOR='emacs -nw'
 export LANG="en_US.UTF-8"
@@ -162,18 +171,8 @@ fi
 ## Android SDK
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
-# BEGIN PATH MODIFICATION
-
-PATH=/usr/local/bin:/usr/local/sbin:$PATH
-
-# Add binaries into the path
-PATH=~/.dotfiles/bin:$PATH
-
-# Chromium depot tools
-PATH=~/dev/depot_tools:$PATH
-
-# NPM things
-PATH=/usr/local/share/npm/bin:$PATH
+# Python virtualenvs
+export WORKON_HOME=~/.virtualenv/envs
 
 # NVM things
 if $HOMEBREW_INSTALLED && isHomebrewFormulaInstalled nvm ; then
@@ -185,9 +184,40 @@ if command -v nvm > /dev/null; then
   [[ -r $NVM_DIR/bash_completion ]] && source $NVM_DIR/bash_completion
 fi
 
+if [[ -f .nvmrc && -r .nvmrc ]]; then
+  nvm use
+elif [[ $(nvm version) != $(nvm version default)  ]]; then
+  echo "Reverting to nvm default version"
+  nvm use default
+fi
+
+# Google Cloud SDK
+if $HOMEBREW_INSTALLED && isHomebrewCaskInstalled google-cloud-sdk ; then
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc'
+  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc'
+fi
+
+
+# BEGIN PATH MODIFICATION
+
+# Default
+PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin
+
+# Add binaries into the path
+PATH=~/.dotfiles/bin:$PATH
+
+# NPM things
+#PATH=/usr/local/share/npm/bin:$PATH
+
+# Rust things
+PATH=~/.cargo/bin:$PATH
+
 # Go things
-export GOPATH=$HOME/.go
+export GOPATH=$HOME
 PATH=$PATH:$GOPATH/bin
+
+# OpenSSL
+PATH=/usr/local/opt/openssl/bin:$PATH
 
 # If we have coreutils installed via HomeBrew, use those instead of OSX's.
 if $HOMEBREW_INSTALLED && isHomebrewFormulaInstalled coreutils ; then
@@ -195,15 +225,8 @@ if $HOMEBREW_INSTALLED && isHomebrewFormulaInstalled coreutils ; then
     MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
 fi
 
+
 export PATH
 export MANPATH
 
 # END PATH MODIFICATION
-
-eval "$(grunt --completion=bash)"
-
-# The next line updates PATH for the Google Cloud SDK.
-source ~/dev/google-cloud-sdk/path.bash.inc
-
-# The next line enables bash completion for gcloud.
-source ~/dev/google-cloud-sdk/completion.bash.inc
