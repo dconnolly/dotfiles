@@ -158,7 +158,7 @@ fi
 
 # GitHub repo reading api token.
 if $HOMEBREW_INSTALLED; then
-  export HOMEBREW_GITHUB_API_TOKEN="2eb89b68c2ce7009fcc6222f85af6a76a2fe37bc"
+  export HOMEBREW_GITHUB_API_TOKEN="" # Shouldn't commit these, GitHub will just revoke them.
 fi
 
 export EDITOR='emacs -nw'
